@@ -1,0 +1,7 @@
+name: web
+version: 0.1b1
+author: Bart Vanbrabant <bart@impera.io>
+license: Apache 2.0
+source: git@github.com:impera_io/web
+requires:
+    ip: git@github.com:impera_io/ip, ">= 0.1"

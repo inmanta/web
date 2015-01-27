@@ -1,0 +1,80 @@
+"""
+    Copyright 2015 Impera
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+    Contact: bart@impera.io
+"""
+
+entity Alias:
+    """
+        An alias (hostname) for a web application
+    """
+    std::hoststring hostname
+end
+
+implement Alias using std::none
+
+entity Application:
+    """
+        This entity models a webapplication
+    """
+    string document_root
+end
+
+implement Application using std::none
+
+Application application [0:] -- [1] Alias name
+Application application_alias [0:] -- [0:] Alias aliases
+
+entity ApplicationContainer extends ip::services::Server:
+    """
+        A container that hosts webapplications
+    """
+end
+
+implement ApplicationContainer using std::none
+
+Application application [0:] -- [1] ApplicationContainer container
+
+entity Cluster:
+    """
+        A webapplication that is hosted as a cluster
+    """
+    number cluster_size
+end
+
+Cluster cluster [0:1] -- [1] Alias name
+Cluster cluster_alias [0:1] -- [0:] Alias aliases
+
+implement Cluster using std::none
+
+Cluster web_cluster [0:] -- [1] vm::Image image
+Cluster web_cluster [0:] -- [1] vm::IaaS iaas
+Cluster web_cluster [0:] -- [1:] LoadBalancedApplication loadbalancer
+
+entity LoadBalancer extends ip::services::Server:
+
+end
+
+entity LoadBalancedApplication:
+
+end
+
+implement LoadBalancedApplication using std::none
+
+LoadBalancedApplication applications [0:] -- [1:] LoadBalancer loadbalancer
+
+LoadBalancedApplication lb_app [0:1] -- [1:] Application app_instances
+LoadBalancedApplication loadbalancer [0:1] -- [1] Alias name
+
