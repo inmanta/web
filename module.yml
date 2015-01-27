@@ -5,3 +5,4 @@ license: Apache 2.0
 source: git@github.com:impera-io/web
 requires:
     ip: git@github.com:impera-io/ip, ">= 0.1"
+    vm: git@github.com:impera-io/vm, ">= 0.1"
