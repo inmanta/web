@@ -38,9 +38,13 @@ Application application [0:] -- [1] Alias name
 Application application_alias [0:] -- [0:] Alias aliases
 
 entity ApplicationContainer extends ip::services::Server:
+    """ A container that hosts webapplications
+
+        :param user: The user name of the user as which the process of this container runs
+        :param user: The group name of the group as which the process of this container runs
     """
-        A container that hosts webapplications
-    """
+    string user
+    string group
 end
 
 implement ApplicationContainer using std::none
@@ -63,12 +67,17 @@ Cluster web_cluster [0:] -- [1] vm::Image image
 Cluster web_cluster [0:] -- [1] vm::IaaS iaas
 Cluster web_cluster [0:] -- [1:] LoadBalancedApplication loadbalancer
 
-entity LoadBalancer extends ip::services::Server:
+entity LoadBalancer extends ip::services::BaseServer:
+    """
+        A loadbalancer for web applications
+    """
+end
+
+entity HostedLoadBalancer extends LoadBalancer, ip::services::Server:
 
 end
 
 entity LoadBalancedApplication:
-
 end
 
 implement LoadBalancedApplication using std::none
