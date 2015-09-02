@@ -45,6 +45,7 @@ entity ApplicationContainer extends ip::services::Server:
     """
     string user
     string group
+    number port = 80
 end
 
 implement ApplicationContainer using std::none
