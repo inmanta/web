@@ -79,6 +79,7 @@ entity HostedLoadBalancer extends LoadBalancer, ip::services::Server:
 end
 
 entity LoadBalancedApplication:
+    bool nameonly = true
 end
 
 implement LoadBalancedApplication using std::none
