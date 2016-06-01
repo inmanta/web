@@ -15,7 +15,7 @@
 
     Contact: code@inmanta.com
 """
-import ip
+import ip::services
 import vm
 
 entity Alias:
