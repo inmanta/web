@@ -1,8 +1,7 @@
 name: web
-version: 0.1b1
-author: Bart Vanbrabant <bart@impera.io>
+version: '0.1'
+author: Inmanta <code@inmanta.com>
 license: Apache 2.0
-source: git@git.impera.io:modules/web
 requires:
-    ip: git@git.impera.io:modules/ip, ">= 0.1"
-    vm: git@git.impera.io:modules/vm, ">= 0.1"
+- ip
+- vm
