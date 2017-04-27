@@ -1,7 +1,4 @@
 name: web
-version: '0.2'
+version: 0.2.1
 author: Inmanta <code@inmanta.com>
 license: Apache 2.0
-requires:
-- ip
-- vm

@@ -16,7 +16,6 @@
     Contact: code@inmanta.com
 """
 import ip::services
-import vm
 
 entity Alias:
     """
@@ -66,8 +65,6 @@ Cluster cluster_alias [0:1] -- [0:] Alias aliases
 
 implement Cluster using std::none
 
-Cluster web_cluster [0:] -- [1] vm::Image image
-Cluster web_cluster [0:] -- [1] vm::IaaS iaas
 Cluster web_cluster [0:] -- [1:] LoadBalancedApplication loadbalancer
 
 entity LoadBalancer extends ip::services::BaseServer:
