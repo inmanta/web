@@ -51,7 +51,7 @@ end
 
 implement ApplicationContainer using std::none
 
-Application application [0:] -- [1] ApplicationContainer container
+Application.container [1] -- ApplicationContainer.application [0:]
 
 entity Cluster:
     """
