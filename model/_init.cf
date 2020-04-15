@@ -1,5 +1,5 @@
 """
-    Copyright 2016 Inmanta
+    Copyright 2020 Inmanta
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ entity Alias:
     std::hoststring hostname
 end
 
-implement Alias using std::none
 
 entity Application:
     """
@@ -33,10 +32,9 @@ entity Application:
     string document_root
 end
 
-implement Application using std::none
+Application.name [1] -- Alias.application [0:]
+Application.aliases [0:] -- Alias.application_alias
 
-Application application [0:] -- [1] Alias name
-Application application_alias [0:] -- [0:] Alias aliases
 
 entity ApplicationContainer extends ip::services::Server:
     """ A container that hosts webapplications
@@ -49,9 +47,8 @@ entity ApplicationContainer extends ip::services::Server:
     number port = 80
 end
 
-implement ApplicationContainer using std::none
-
 Application.container [1] -- ApplicationContainer.application [0:]
+
 
 entity Cluster:
     """
@@ -60,12 +57,10 @@ entity Cluster:
     number cluster_size
 end
 
-Cluster cluster [0:1] -- [1] Alias name
-Cluster cluster_alias [0:1] -- [0:] Alias aliases
+Cluster.name [1] -- Alias.cluster [0:1]
+Cluster.aliases [0:] -- Alias.cluster_alias [0:1]
+Cluster.loadbalancer [1:] -- LoadBalancedApplication.web_cluster [0:]
 
-implement Cluster using std::none
-
-Cluster web_cluster [0:] -- [1:] LoadBalancedApplication loadbalancer
 
 entity LoadBalancer extends ip::services::BaseServer:
     """
@@ -81,10 +76,13 @@ entity LoadBalancedApplication:
     bool nameonly = true
 end
 
+
+LoadBalancedApplication.loadbalancer [1:] -- LoadBalancer.applications [0:]
+LoadBalancedApplication.app_instances [1:] -- Application.lb_app [0:1]
+LoadBalancedApplication.name [1] -- Alias.loadbalancer [0:1]
+
+implement Alias using std::none
+implement Application using std::none
+implement ApplicationContainer using std::none
+implement Cluster using std::none
 implement LoadBalancedApplication using std::none
-
-LoadBalancedApplication applications [0:] -- [1:] LoadBalancer loadbalancer
-
-LoadBalancedApplication lb_app [0:1] -- [1:] Application app_instances
-LoadBalancedApplication loadbalancer [0:1] -- [1] Alias name
-
