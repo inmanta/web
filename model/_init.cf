@@ -33,7 +33,7 @@ entity Application:
 end
 
 Application.name [1] -- Alias.application [0:]
-Application.aliases [0:] -- Alias.application_alias
+Application.aliases [0:] -- Alias.application_alias [0:]
 
 
 entity ApplicationContainer extends ip::services::Server:
